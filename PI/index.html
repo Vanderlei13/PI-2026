@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaizeAI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="header">Maize<span>AI</span></div>
+
+    <!-- HOME -->
+    <div id="home" class="screen active">
+        <div class="center">
+
+            <img src="img/logo.png" class="logo">
+
+            <p class="subtitle">
+                <strong>Diagnóstico inteligente <br>
+                para folhas de milho</strong>
+            </p>
+
+            <div class="btn" onclick="goHome()">
+                <img src="img/camera.png" alt="Câmera">
+                <div>
+                    <strong>Tirar foto da planta</strong>
+                    <span>Tocar para analisar</span>
+                </div>
+            </div>
+
+            <p class="info">
+                Identifique doenças como a <br>
+                Cercosporiose em segundos
+            </p>
+
+        </div>
+    </div>
+
+    <!-- CRÉDITOS -->
+    <div id="credits" class="screen">
+
+        <div class="list">
+
+            <div class="card">
+                <div class="avatar"></div>
+                <div>
+                    <div class="name">Ana Luisa Paixão Panho</div>
+                    <div class="role">Líder, Treinamento de IA</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="avatar"></div>
+                <div>
+                    <div class="name">Kemily de Santi</div>
+                    <div class="role">Treinamento de IA</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="avatar"></div>
+                <div>
+                    <div class="name">Manuela Caldeira Machado</div>
+                    <div class="role">Treinamento de IA</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="avatar"></div>
+                <div>
+                    <div class="name">Tiago Bernieri Dal Belo</div>
+                    <div class="role">Vice-Líder, Programação</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="avatar"></div>
+                <div>
+                    <div class="name">Vanderlei Rossoni Pittan</div>
+                    <div class="role">Design, Programação</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+
+        <div class="nav-item" data-nav="camera" data-icon="camera" onclick="goCamera(this)">
+            <img src="img/camera-nav.png" alt="Tirar foto">
+            <span>Tirar Foto</span>
+        </div>
+
+        <div class="nav-item active" data-nav="home" data-icon="home" onclick="goHome(this)">
+            <img src="img/home-nav.png" alt="Tela inicial">
+            <span>Tela Inicial</span>
+        </div>
+
+        <div class="nav-item" data-nav="credits" data-icon="users" onclick="goCredits(this)">
+            <img src="img/users-nav.png" alt="Créditos">
+            <span>Créditos</span>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
