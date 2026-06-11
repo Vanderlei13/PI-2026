@@ -188,7 +188,7 @@ git clone https://github.com/Vanderlei13/PI-2026
 ### Acesse a pasta
 
 ```bash
-cd PI-2026
+cd MaizeAI
 ```
 
 ### Instale as dependências
