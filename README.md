@@ -1,221 +1,222 @@
-# MaizeAI
+# 🌽 MaizeAI
 
 Sistema web com Inteligência Artificial para diagnóstico foliar em plantações de milho.
 
----
+## 📖 Sobre o Projeto
 
-# Sobre o Projeto
-
-O **MaizeAI** é um projeto desenvolvido para a matéria de Projeto Integrador com o objetivo de utilizar **Inteligência Artificial** e **Visão Computacional** para identificar Cercosporiose em folhas de milho através de imagens.
+O **MaizeAI** é um projeto desenvolvido para a disciplina de **Projeto Integrador**, com o objetivo de aplicar conceitos de **Inteligência Artificial**, **Visão Computacional** e **Desenvolvimento Web** para auxiliar na identificação de doenças em folhas de milho.
 
 A proposta do sistema é oferecer uma solução:
 
-* Simples
-* Moderna
-* Acessível
-* Rápida
-* Prática
+* ✅ Simples
+* ✅ Moderna
+* ✅ Acessível
+* ✅ Rápida
+* ✅ Intuitiva
 
-O usuário pode tirar uma foto da folha e receber um possível diagnóstico gerado pela IA.
-
----------
-
-# Objetivo
-
-O projeto busca auxiliar no diagnóstico inicial de problemas agrícolas, reduzindo:
-
-* Tempo de análise
-* Custos de monitoramento
-* Perdas na produção
-* Dependência de análises manuais em casos simples
-
-Além disso, o MaizeAI demonstra como a tecnologia pode ser aplicada no agronegócio de forma acessível.
-
----------
-
-# Como Funciona
-
-## 1️. Upload da Imagem
-
-O usuário tira uma foto da folha de milho.
-
----------
-
-## 2️. Processamento da IA
-
-A imagem é enviada para um modelo treinado no **Roboflow**.
-
-A IA analisa padrões visuais para identificar possíveis:
-
-* Doenças
-* Manchas
-* Alterações foliares
-* Deficiências
+Por meio da câmera do dispositivo, o usuário pode capturar uma imagem da folha e enviá-la para análise, recebendo um possível diagnóstico gerado pela Inteligência Artificial.
 
 ---
 
-## 3️. Resultado
+## 🎯 Objetivo
 
-O sistema retorna:
+O projeto busca auxiliar produtores, estudantes e profissionais da área agrícola no diagnóstico inicial de doenças foliares, contribuindo para:
 
-* Possível diagnóstico da doença.
+* Redução do tempo de análise;
+* Diminuição de custos de monitoramento;
+* Identificação precoce de problemas na lavoura;
+* Apoio à agricultura inteligente;
+* Aplicação prática da Inteligência Artificial no agronegócio.
 
----------
+---
 
-# Tecnologias Utilizadas
+## ⚙️ Como Funciona
 
-## Front-end
+### 1. Captura da Imagem
 
-* HTML5
+O usuário acessa a tela principal e utiliza a câmera do dispositivo para fotografar uma folha de milho.
+
+### 2. Processamento
+
+A imagem capturada é preparada para envio ao modelo de Inteligência Artificial treinado para identificar padrões visuais relacionados a:
+
+* Doenças foliares;
+* Manchas;
+* Alterações na coloração;
+* Possíveis deficiências.
+
+### 3. Resultado
+
+Após a análise, o sistema apresenta um possível diagnóstico ao usuário.
+
+---
+
+## 🖥️ Tecnologias Utilizadas
+
+### Front-end
+
+* React
+* Vite
+* JavaScript (ES6+)
+* Tailwind CSS
 * CSS3
-* JavaScript
 
----------
+### Interface e UX
 
-## Inteligência Artificial
+* Lucide React
+* Design Responsivo
+* Mobile First
+
+### Inteligência Artificial
 
 * Roboflow
 * Visão Computacional
+* Machine Learning
 
----------
+---
 
-# Estrutura do Projeto
+## 📂 Estrutura do Projeto
 
-```bash
-📁 MaizeAI
- ┣ 📄 index.html
- ┣ 📄 style.css
- ┣ 📄 script.js
- ┣ 📁 img
- ┗ 📄 README.md
-```
-
----------
-
-# Interface
-
-O sistema possui:
-
-* Tela inicial
-* Área de câmera
-* Exibição de resultados
-* Interface responsiva
-* Navegação simples e intuitiva
-
----------
-
-# Funcionalidades
-
-✅ Upload de imagens
-
-✅ Integração com IA
-
-✅ Diagnóstico foliar
-
-✅ Interface moderna
-
-✅ Navegação entre telas
-
-✅ Sistema responsivo
-
----------
-
-# Conceitos Utilizados
-
-## Inteligência Artificial
-
-A IA aprende padrões através de treinamento com imagens.
-
----------
-
-## Visão Computacional
-
-Área da IA responsável pela interpretação de imagens.
-
----------
-
-## Dataset
-
-Conjunto de imagens utilizadas para treinar o modelo (+2000)
-
----------
-
-## Inferência
-
-Processo onde a IA analisa a imagem enviada pelo usuário.
-
----------
-
-# Impacto do Projeto
-
-O MaizeAI pode contribuir para:
-
-* Agricultura inteligente
-* Diagnóstico mais rápido
-* Redução de desperdícios
-* Apoio tecnológico no campo
-
----------
-
-# Melhorias Futuras
-
-* Histórico de análises
-* Dashboard com estatísticas
-* Suporte para outras doenças e culturas agrícolas
-* Publicação do aplicativo em lojas digitais
-
----------
-
-# Demonstração
-
-```bash
-Upload da imagem → IA analisa → Resultado exibido
+```text
+MaizeAI
+├── public/
+├── src/
+│   ├── img/
+│   ├── MaizeApp.jsx
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+├── vite.config.js
+└── README.md
 ```
 
 ---
 
-# Como Executar o Projeto
+## 📱 Funcionalidades
 
-## Clone o repositório
+### 🌿 Diagnóstico Foliar
+
+* Captura de imagens pela câmera;
+* Preparação da imagem para análise;
+* Integração com modelo de IA.
+
+### 📷 Sistema de Câmera
+
+* Acesso à câmera traseira do dispositivo;
+* Captura em alta resolução;
+* Interface otimizada para dispositivos móveis.
+
+### 🏠 Navegação
+
+* Tela Inicial;
+* Tela de Captura;
+* Tela de Créditos.
+
+### 🎨 Interface
+
+* Layout responsivo;
+* Design moderno;
+* Navegação intuitiva;
+* Animações suaves.
+
+---
+
+## 👥 Equipe de Desenvolvimento
+
+| Integrante               | Função                    |
+| ------------------------ | ------------------------- |
+| Ana Luisa Paixão Panho   | Líder e Treinamento de IA |
+| Kemily de Santi          | Treinamento de IA         |
+| Manuela Caldeira Machado | Treinamento de IA         |
+| Tiago Bernieri Dal Belo  | Vice-Líder e Programação  |
+| Vanderlei Rossoni Pittan | Design e Programação      |
+
+---
+
+## 🧠 Conceitos Aplicados
+
+### Inteligência Artificial
+
+Utilização de modelos treinados para reconhecer padrões em imagens agrícolas.
+
+### Visão Computacional
+
+Área responsável pela interpretação automática das imagens capturadas.
+
+### Dataset
+
+Conjunto de mais de 2000 imagens utilizadas para treinamento do modelo.
+
+### Inferência
+
+Processo no qual a IA analisa uma nova imagem e produz um resultado.
+
+---
+
+## 🌱 Impacto do Projeto
+
+O MaizeAI contribui para:
+
+* Agricultura de precisão;
+* Monitoramento mais eficiente;
+* Redução de perdas na produção;
+* Democratização do acesso à tecnologia no campo;
+* Incentivo ao uso da Inteligência Artificial na agricultura.
+
+---
+
+## 🚀 Melhorias Futuras
+
+* Histórico de diagnósticos;
+* Dashboard com estatísticas;
+* Armazenamento em nuvem;
+* Geração de relatórios;
+* Suporte para novas culturas agrícolas;
+* Identificação de múltiplas doenças;
+* Publicação em lojas de aplicativos.
+
+---
+
+## ▶️ Como Executar
+
+### Clone o repositório
 
 ```bash
 git clone https://github.com/Vanderlei13/PI-2026
 ```
 
----------
-
-## Acesse a pasta
+### Acesse a pasta
 
 ```bash
-cd PI
+cd PI-2026
 ```
 
----------
-
-## Execute o projeto
-
-Abra o arquivo:
+### Instale as dependências
 
 ```bash
-index.html
+npm install
 ```
 
-em seu navegador.
+### Execute o projeto
 
----------
+```bash
+npm run dev
+```
 
-# Desenvolvimento
+### Abra no navegador
 
-Projeto desenvolvido para fins educacionais e apresentação para o Projeto Integrador
-
----------
-
-# Licença
-
-Este projeto possui finalidade educacional.
+```text
+http://localhost:5173
+```
 
 ---
 
-# Considerações Finais
+## 📄 Licença
 
-O MaizeAI demonstra como a Inteligência Artificial pode ser aplicada de maneira prática no agronegócio, unindo tecnologia, sustentabilidade e inovação em uma solução acessível e funcional.
+Projeto desenvolvido exclusivamente para fins educacionais e acadêmicos.
+
+---
+
+## 🌟 Considerações Finais
+
+O MaizeAI demonstra como tecnologias modernas como React, Inteligência Artificial e Visão Computacional podem ser aplicadas para criar soluções acessíveis e inovadoras para o agronegócio, promovendo eficiência, sustentabilidade e transformação digital no campo.
