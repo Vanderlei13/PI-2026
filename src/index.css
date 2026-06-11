@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -109,3 +110,25 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+=======
+@import "tailwindcss";
+
+@theme {
+  --animate-fade-in: fadeIn 0.25s ease-out forwards;
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Cria explicitamente a classe utilitária para o Tailwind v4 */
+@utility animate-fadeIn {
+  animation: var(--animate-fade-in);
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+}
+>>>>>>> 4fa7ea38d4db9c80fea76f481b4b3cc1d391ef3c

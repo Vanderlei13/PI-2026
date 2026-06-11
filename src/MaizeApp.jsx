@@ -6,8 +6,6 @@ import logoImg from './img/logo.png';
 export default function MaizeApp() {
   const [activeScreen, setActiveScreen] = useState('home');
   const [stream, setStream] = useState(null);
-  const [resultado, setResultado] = useState(null);
-  const [analisando, setAnalisando] = useState(false);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -63,52 +61,19 @@ export default function MaizeApp() {
     }
   };
 
-  const takePhoto = async () => {
-  if (!videoRef.current || !canvasRef.current) return;
-
-  const video = videoRef.current;
-  const canvas = canvasRef.current;
-  const context = canvas.getContext('2d');
-
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-  const imagemBase64 = canvas.toDataURL('image/jpeg').split(',')[1];
-
-  setAnalisando(true);
-  setResultado(null);
-
-  try {
-    const response = await fetch(
-      "https://detect.roboflow.com/pi2026/2", 
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `api_key="2d3VcfJ6eaZmhY2MZXAD=${encodeURIComponent(imagemBase64)}`
-      }
-    );
-
-    const data = await response.json();
-    const predicoes = data.predictions;
-
-    if (!predicoes || predicoes.length === 0) {
-      setResultado({ status: "saudavel", mensagem: "✅ Planta Saudável", descricao: "Nenhuma doença detectada." });
-    } else {
-      const doenca = predicoes.find(p => p.class === "doente" || p.class === "doenca");
-      if (doenca) {
-        const confianca = Math.round(doenca.confidence * 100);
-        setResultado({ status: "doente", mensagem: "⚠️ Doença Detectada", descricao: `Cercosporiose identificada com ${confianca}% de confiança.` });
-      } else {
-        setResultado({ status: "saudavel", mensagem: "✅ Planta Saudável", descricao: "Nenhuma doença detectada." });
-      }
+  const takePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      alert("Foto capturada com sucesso! Analisando...");
     }
-  } catch (err) {
-    setResultado({ status: "erro", mensagem: "❌ Erro na análise", descricao: "Verifique sua conexão e tente novamente." });
-  }
-
-  setAnalisando(false);
-};
+  };
 
   return (
     <div className="w-full h-screen bg-black flex justify-center items-center font-sans antialiased select-none">
@@ -174,27 +139,10 @@ export default function MaizeApp() {
                 className="w-full h-full object-cover"
               />
               <canvas ref={canvasRef} className="hidden" />
-
-              {resultado && (
-                <div className={`absolute top-4 left-4 right-4 z-50 p-4 rounded-2xl shadow-lg text-center ${
-                  resultado.status === 'saudavel' ? 'bg-green-500' : 
-                  resultado.status === 'doente' ? 'bg-red-500' : 'bg-gray-500'
-                } text-white`}>
-                  <p className="font-bold text-lg">{resultado.mensagem}</p>
-                  <p className="text-sm mt-1 opacity-90">{resultado.descricao}</p>
-                </div>
-              )}
-
-              {analisando && (
-                <div className="absolute top-4 left-4 right-4 z-50 p-4 rounded-2xl bg-yellow-500 text-white text-center shadow-lg">
-                  <p className="font-bold">🔍 Analisando...</p>
-                </div>
-              )}
               
               <div className="absolute bottom-6 w-full text-center z-50">
                 <button 
                   onClick={takePhoto}
-                  disabled={analisando}
                   className="w-[75px] h-[75px] bg-white/20 border-4 border-white rounded-full mx-auto flex items-center justify-center active:scale-90 transition-transform"
                 >
                   <div className="w-[55px] h-[55px] bg-white rounded-full" />
