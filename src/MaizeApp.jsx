@@ -6,6 +6,9 @@ import logoImg from './img/logo.png';
 export default function MaizeApp() {
   const [activeScreen, setActiveScreen] = useState('home');
   const [stream, setStream] = useState(null);
+  const [resultado, setResultado] = useState(null);
+  const [analisando, setAnalisando] = useState(false);
+
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -31,27 +34,36 @@ export default function MaizeApp() {
   }, [activeScreen]);
 
   const goCamera = async () => {
+    setResultado(null);
     setActiveScreen('camera');
+
     try {
       const constraints = {
-        video: { 
-          facingMode: { exact: "environment" },
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
+        video: {
+          facingMode: "environment",
+          width: { ideal: 1920 },
+          height: { ideal: 1080 }
         },
         audio: false
       };
-      
+
       let mediaStream;
+
       try {
         mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
       } catch (e) {
-        mediaStream = await navigator.mediaDevices.getUserMedia({ 
-          video: { width: { ideal: 1280 }, height: { ideal: 720 } } 
+        mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "environment",
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          },
+          audio: false
         });
       }
-      
+
       setStream(mediaStream);
+
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
       }
@@ -61,43 +73,135 @@ export default function MaizeApp() {
     }
   };
 
-  const takePhoto = () => {
-    if (videoRef.current && canvasRef.current) {
-      const video = videoRef.current;
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
-      
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      
-      alert("Foto capturada com sucesso! Analisando...");
+  const takePhoto = async () => {
+  if (!videoRef.current || !canvasRef.current) return;
+
+  const video = videoRef.current;
+  const canvas = canvasRef.current;
+  const context = canvas.getContext("2d");
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  setAnalisando(true);
+  setResultado(null);
+
+  try {
+    // Cria 3 versões da imagem
+    const versoes = [];
+
+    // Versão 1 - original
+    versoes.push(canvas.toDataURL("image/jpeg").split(",")[1]);
+
+    // Versão 2 - espelhada
+    const canvas2 = document.createElement("canvas");
+    canvas2.width = canvas.width;
+    canvas2.height = canvas.height;
+    const ctx2 = canvas2.getContext("2d");
+
+    ctx2.translate(canvas.width, 0);
+    ctx2.scale(-1, 1);
+    ctx2.drawImage(canvas, 0, 0);
+
+    versoes.push(canvas2.toDataURL("image/jpeg").split(",")[1]);
+
+    // Versão 3 - rotacionada 90°
+    const canvas3 = document.createElement("canvas");
+    canvas3.width = canvas.height;
+    canvas3.height = canvas.width;
+
+    const ctx3 = canvas3.getContext("2d");
+
+    ctx3.translate(canvas3.width / 2, canvas3.height / 2);
+    ctx3.rotate((90 * Math.PI) / 180);
+    ctx3.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
+
+    versoes.push(canvas3.toDataURL("image/jpeg").split(",")[1]);
+
+    // Envia as 3 imagens para a IA
+    const resultados = await Promise.all(
+  versoes.map(async (img) => {
+    const response = await fetch(
+      "https://detect.roboflow.com/pi2026/2?api_key=2d3VcfJ6eaZmhY2MZXAD&confidence=30",
+      {
+        method: "POST",
+        body: img
+      }
+    );
+
+    return response.json();
+  })
+);
+
+    // Junta todas as predições
+    const todasPredicoes = resultados.flatMap(
+      (r) => r.predictions || []
+    );
+
+    if (todasPredicoes.length === 0) {
+      setResultado({
+        status: "saudavel",
+        mensagem: "✅ Planta Saudável",
+        descricao: "Nenhuma doença detectada.",
+      });
+    } else {
+      const doenca = todasPredicoes
+        .filter((p) => p.class.toLowerCase() !== "saudavel")
+        .sort((a, b) => b.confidence - a.confidence)[0];
+
+      if (doenca) {
+        const confianca = Math.round(doenca.confidence * 100);
+
+        setResultado({
+          status: "doente",
+          mensagem: "⚠️ Doença Detectada",
+          descricao: `Cercosporiose identificada com ${confianca}% de confiança.`,
+        });
+      } else {
+        setResultado({
+          status: "saudavel",
+          mensagem: "✅ Planta Saudável",
+          descricao: "Nenhuma doença detectada.",
+        });
+      }
     }
-  };
+  } catch (err) {
+    console.error(err);
+
+    setResultado({
+      status: "erro",
+      mensagem: "❌ Erro na análise",
+      descricao: "Verifique sua conexão e tente novamente.",
+    });
+  }
+
+  setAnalisando(false);
+};
 
   return (
     <div className="w-full h-screen bg-black flex justify-center items-center font-sans antialiased select-none">
       <div className="w-full h-full max-w-[500px] bg-[#edf4ee] relative flex flex-col overflow-hidden">
-        
+
         <header className="bg-gradient-to-r from-[#3f7b4f] to-[#5a9c69] text-white pt-[calc(15px+env(safe-area-inset-top))] px-6 pb-4 font-bold text-xl tracking-wide text-center z-50 shadow-md">
           Maize<span className="text-[#FDDD4D]">AI</span>
         </header>
 
         <main className="flex-1 w-full relative overflow-y-auto pb-[90px]">
-          
+
           {activeScreen === 'home' && (
             <div className="text-center py-10 px-6 animate-fadeIn">
-              <img 
-                src={logoImg} 
-                alt="MaizeAI Logo" 
-                className="w-[60%] max-w-[220px] h-auto mx-auto mb-5 object-contain" 
+              <img
+                src={logoImg}
+                alt="MaizeAI Logo"
+                className="w-[60%] max-w-[220px] h-auto mx-auto mb-5 object-contain"
               />
-              
+
               <p className="text-base text-gray-900 leading-relaxed mb-8">
                 <strong>Diagnóstico inteligente <br /> para folhas de milho</strong>
               </p>
 
-              <button 
+              <button
                 onClick={goCamera}
                 className="bg-gradient-to-b from-[#75BC8A] to-[#367B57] text-white flex items-center justify-center w-[90%] mx-auto py-[18px] px-4 border-2 border-[#6EA27D] rounded-2xl shadow-lg active:scale-95 transition-transform duration-100"
               >
@@ -117,11 +221,20 @@ export default function MaizeApp() {
           {activeScreen === 'credits' && (
             <div className="p-4 space-y-3 animate-fadeIn">
               {creditsList.map((member, index) => (
-                <div key={index} className="flex items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="w-11 h-11 rounded-full bg-[#c8d9c2] mr-4 flex-shrink-0" />
-                  <div>
-                    <div className="font-bold text-sm text-[#2d4f36]">{member.name}</div>
-                    <div className="text-xs text-[#6f7f72] mt-0.5">{member.role}</div>
+                <div
+                  key={index}
+                  className="flex items-start bg-white p-4 rounded-2xl shadow-sm border border-gray-100"
+                >
+                  <div className="w-11 h-11 rounded-full bg-[#c8d9c2] mr-4 mt-1 flex-shrink-0" />
+
+                  <div className="flex-1 text-left">
+                    <div className="font-bold text-sm text-[#2d4f36] leading-5">
+                      {member.name}
+                    </div>
+
+                    <div className="text-xs text-[#6f7f72] mt-1 leading-4">
+                      {member.role}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -129,55 +242,105 @@ export default function MaizeApp() {
           )}
 
           {activeScreen === 'camera' && (
-            /* Ajustado os eixos X e Y usando posicionamento fixo ancorado aos limites do app mobile */
             <div className="fixed top-[calc(54px+env(safe-area-inset-top))] left-1/2 -translate-x-1/2 w-full max-w-[500px] bottom-[calc(57px+env(safe-area-inset-bottom))] bg-black z-40 flex flex-col justify-between overflow-hidden">
-              <video 
-                ref={videoRef} 
-                autoPlay 
-                playsInline 
-                muted 
+
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
                 className="w-full h-full object-cover"
               />
-              <canvas ref={canvasRef} className="hidden" />
-              
+
+              <canvas
+                ref={canvasRef}
+                className="hidden"
+              />
+
+              {resultado && (
+                <div
+                  className={`absolute top-4 left-4 right-4 z-50 p-4 rounded-2xl shadow-lg text-center ${
+                    resultado.status === 'saudavel'
+                      ? 'bg-green-500'
+                      : resultado.status === 'doente'
+                      ? 'bg-red-500'
+                      : 'bg-gray-500'
+                  } text-white`}
+                >
+                  <p className="font-bold text-lg">
+                    {resultado.mensagem}
+                  </p>
+
+                  <p className="text-sm mt-1 opacity-90">
+                    {resultado.descricao}
+                  </p>
+                </div>
+              )}
+
+              {analisando && (
+                <div className="absolute top-4 left-4 right-4 z-50 p-4 rounded-2xl bg-yellow-500 text-white text-center shadow-lg">
+                  <p className="font-bold">
+                    🔍 Analisando...
+                  </p>
+                </div>
+              )}
+
               <div className="absolute bottom-6 w-full text-center z-50">
-                <button 
+                <button
                   onClick={takePhoto}
                   className="w-[75px] h-[75px] bg-white/20 border-4 border-white rounded-full mx-auto flex items-center justify-center active:scale-90 transition-transform"
                 >
                   <div className="w-[55px] h-[55px] bg-white rounded-full" />
                 </button>
-                <p className="text-white text-xs mt-3 drop-shadow-md">Alinhe a folha no centro</p>
+
+                <p className="text-white text-xs mt-3 drop-shadow-md">
+                  Alinhe a folha no centro
+                </p>
               </div>
+
             </div>
           )}
 
         </main>
 
         <nav className="absolute bottom-0 w-full bg-white flex justify-around pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] px-2 border-t border-gray-200 z-50">
-          <button 
+
+          <button
             onClick={goCamera}
-            className={`flex-1 flex flex-col items-center gap-1 transition-all ${activeScreen === 'camera' ? 'opacity-100 font-bold text-[#4e8b63]' : 'opacity-40 text-gray-600'}`}
+            className={`flex-1 flex flex-col items-center gap-1 transition-all ${
+              activeScreen === 'camera'
+                ? 'opacity-100 font-bold text-[#4e8b63]'
+                : 'opacity-40 text-gray-600'
+            }`}
           >
             <Camera className="w-6 h-6" />
             <span className="text-[10px]">Tirar Foto</span>
           </button>
 
-          <button 
+          <button
             onClick={() => setActiveScreen('home')}
-            className={`flex-1 flex flex-col items-center gap-1 transition-all ${activeScreen === 'home' ? 'opacity-100 font-bold text-[#4e8b63]' : 'opacity-40 text-gray-600'}`}
+            className={`flex-1 flex flex-col items-center gap-1 transition-all ${
+              activeScreen === 'home'
+                ? 'opacity-100 font-bold text-[#4e8b63]'
+                : 'opacity-40 text-gray-600'
+            }`}
           >
             <Home className="w-6 h-6" />
             <span className="text-[10px]">Tela Inicial</span>
           </button>
 
-          <button 
+          <button
             onClick={() => setActiveScreen('credits')}
-            className={`flex-1 flex flex-col items-center gap-1 transition-all ${activeScreen === 'credits' ? 'opacity-100 font-bold text-[#4e8b63]' : 'opacity-40 text-gray-600'}`}
+            className={`flex-1 flex flex-col items-center gap-1 transition-all ${
+              activeScreen === 'credits'
+                ? 'opacity-100 font-bold text-[#4e8b63]'
+                : 'opacity-40 text-gray-600'
+            }`}
           >
             <Users className="w-6 h-6" />
             <span className="text-[10px]">Créditos</span>
           </button>
+
         </nav>
 
       </div>
