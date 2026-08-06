@@ -1,0 +1,469 @@
+/* ===========================
+   MaizeAI - style.css
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f8faf7;
+    color:#222;
+    line-height:1.6;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+a{
+    text-decoration:none;
+}
+
+.container{
+    width:min(1200px,90%);
+    margin:auto;
+}
+
+/* ===========================
+            HEADER
+=========================== */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(12px);
+    z-index:1000;
+    border-bottom:1px solid #e7e7e7;
+}
+
+header .container{
+    height:80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:1.7rem;
+    font-weight:700;
+    color:#2E7D32;
+}
+
+.logo img{
+    width:38px;
+    height:38px;
+    object-fit:contain;
+}
+
+.logo span{
+    color:#1b5e20;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:35px;
+}
+
+nav a{
+    color:#333;
+    font-weight:500;
+    transition:.25s;
+}
+
+nav a:hover{
+    color:#2E7D32;
+}
+
+.btn-header{
+    background:#2E7D32;
+    color:#fff;
+    padding:12px 22px;
+    border-radius:40px;
+    transition:.3s;
+}
+
+.btn-header:hover{
+    background:#1B5E20;
+    transform:translateY(-2px);
+}
+
+/* ===========================
+            HERO
+=========================== */
+
+.hero{
+    padding:170px 0 120px;
+    background:
+    linear-gradient(135deg,#e8f5e9,#f9fff5);
+}
+
+.hero-content{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:70px;
+}
+
+.tag{
+    display:inline-block;
+    background:#dff5e1;
+    color:#2E7D32;
+    padding:8px 18px;
+    border-radius:30px;
+    font-size:.9rem;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:3.5rem;
+    line-height:1.15;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:#2E7D32;
+}
+
+.hero p{
+    color:#666;
+    font-size:1.1rem;
+    margin-bottom:35px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.btn-primary{
+    background:#2E7D32;
+    color:#fff;
+    padding:16px 32px;
+    border-radius:40px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-primary:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 25px rgba(46,125,50,.25);
+}
+
+.btn-secondary{
+    border:2px solid #2E7D32;
+    color:#2E7D32;
+    padding:16px 32px;
+    border-radius:40px;
+    transition:.3s;
+}
+
+.btn-secondary:hover{
+    background:#2E7D32;
+    color:#fff;
+}
+
+.hero-image{
+    display:flex;
+    justify-content:center;
+}
+
+.hero-image img{
+    width:420px;
+    border-radius:35px;
+    box-shadow:0 25px 50px rgba(0,0,0,.18);
+}
+
+/* ===========================
+           SECTIONS
+=========================== */
+
+section{
+    padding:100px 0;
+}
+
+section h2{
+    text-align:center;
+    color:#2E7D32;
+    font-size:2.3rem;
+    margin-bottom:45px;
+}
+
+.about p{
+    max-width:900px;
+    margin:20px auto;
+    text-align:center;
+    color:#555;
+    font-size:1.05rem;
+}
+
+/* ===========================
+        HOW IT WORKS
+=========================== */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.card{
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 15px 30px rgba(0,0,0,.05);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.icon{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.card h3{
+    color:#2E7D32;
+    margin-bottom:15px;
+}
+
+/* ===========================
+        FEATURES
+=========================== */
+
+.features{
+    background:#f2f7f3;
+}
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.feature{
+    background:white;
+    padding:40px;
+    text-align:center;
+    border-radius:18px;
+    font-size:2rem;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+    transition:.3s;
+}
+
+.feature:hover{
+    transform:translateY(-6px);
+}
+
+.feature h3{
+    margin-top:18px;
+    color:#2E7D32;
+    font-size:1.05rem;
+}
+
+/* ===========================
+        TECHNOLOGIES
+=========================== */
+
+.tech-list{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.tech-list span{
+    background:#2E7D32;
+    color:white;
+    padding:12px 22px;
+    border-radius:40px;
+    transition:.3s;
+}
+
+.tech-list span:hover{
+    background:#1B5E20;
+}
+
+/* ===========================
+        DOWNLOAD
+=========================== */
+
+.download{
+    background:linear-gradient(135deg,#2E7D32,#1B5E20);
+    color:white;
+    text-align:center;
+}
+
+.download h2{
+    color:white;
+}
+
+.download p{
+    margin-bottom:35px;
+}
+
+.btn-download{
+    display:inline-block;
+    background:white;
+    color:#2E7D32;
+    padding:18px 40px;
+    border-radius:50px;
+    font-size:1.1rem;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-download:hover{
+    transform:scale(1.05);
+}
+
+.download small{
+    display:block;
+    margin-top:25px;
+    opacity:.85;
+}
+
+/* ===========================
+        FOOTER
+=========================== */
+
+footer{
+    background:#111;
+    color:#ddd;
+    text-align:center;
+    padding:60px 0;
+}
+
+footer h3{
+    color:white;
+    margin-bottom:15px;
+}
+
+.footer-brand{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.footer-brand img{
+    width:32px;
+    height:32px;
+    object-fit:contain;
+}
+
+.footer-links{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    margin:30px 0;
+}
+
+.footer-links a{
+    color:#8bc34a;
+}
+
+.footer-links a:hover{
+    color:white;
+}
+
+footer hr{
+    border:none;
+    height:1px;
+    background:#333;
+    margin:25px 0;
+}
+
+.copy{
+    font-size:.9rem;
+    color:#888;
+}
+
+/* ===========================
+        RESPONSIVO
+=========================== */
+
+@media(max-width:900px){
+
+    nav{
+        display:none;
+    }
+
+    .hero-content{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .hero h1{
+        font-size:2.5rem;
+    }
+
+    .hero-buttons{
+        justify-content:center;
+    }
+
+    .hero-image{
+        order:-1;
+    }
+
+    .hero-image img{
+        width:280px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    section{
+        padding:70px 0;
+    }
+
+    .hero{
+        padding-top:140px;
+    }
+
+    .hero h1{
+        font-size:2rem;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-download{
+        width:100%;
+        text-align:center;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-links{
+        flex-direction:column;
+        gap:15px;
+    }
+
+}
