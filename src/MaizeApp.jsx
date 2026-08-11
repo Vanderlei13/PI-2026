@@ -13,12 +13,34 @@ export default function MaizeApp() {
   const canvasRef = useRef(null);
 
   const creditsList = [
-    { name: "Ana Luisa Paixão Panho", role: "Líder, Treinamento de IA" },
-    { name: "Kemily de Santi", role: "Treinamento de IA" },
-    { name: "Manuela Caldeira Machado", role: "Treinamento de IA" },
-    { name: "Tiago Bernieri Dal Belo", role: "Vice-Líder, Programação" },
-    { name: "Vanderlei Rossoni Pittan", role: "Design, Programação" }
+    {
+      name: "Ana Luisa Paixão Panho",
+      role: "Líder, Treinamento de IA",
+      photo: "/criadores/ana.jpeg"
+    },
+    {
+      name: "Kemily de Santi",
+      role: "Treinamento de IA",
+      photo: "/criadores/kemily.jpeg"
+    },
+    {
+      name: "Manuela Caldeira Machado",
+      role: "Treinamento de IA",
+      photo: "/criadores/manuela.jpeg"
+    },
+    {
+      name: "Tiago Bernieri Dal Belo",
+      role: "Vice-Líder, Programação",
+      photo: "/criadores/tiago.jpeg"
+    },
+    {
+      name: "Vanderlei Rossoni Pittan",
+      role: "Design, Programação",
+      photo: "/criadores/vanderlei.jpeg"
+    }
   ];
+
+
 
   const stopCamera = () => {
     if (stream) {
@@ -218,28 +240,32 @@ export default function MaizeApp() {
             </div>
           )}
 
-          {activeScreen === 'credits' && (
-            <div className="p-4 space-y-3 animate-fadeIn">
-              {creditsList.map((member, index) => (
-                <div
-                  key={index}
-                  className="flex items-start bg-white p-4 rounded-2xl shadow-sm border border-gray-100"
-                >
-                  <div className="w-11 h-11 rounded-full bg-[#c8d9c2] mr-4 mt-1 flex-shrink-0" />
+      {activeScreen === 'credits' && (
+        <div className="p-4 space-y-3 animate-fadeIn">
+          {creditsList.map((member, index) => (
+            <div
+              key={index}
+              className="flex items-start bg-white p-4 rounded-2xl shadow-sm border border-gray-100"
+            >
+              <img
+                src={member.photo}
+                alt={`Foto de ${member.name}`}
+                className="w-11 h-11 rounded-full object-cover mr-4 mt-1 flex-shrink-0"
+              />
 
-                  <div className="flex-1 text-left">
-                    <div className="font-bold text-sm text-[#2d4f36] leading-5">
-                      {member.name}
-                    </div>
-
-                    <div className="text-xs text-[#6f7f72] mt-1 leading-4">
-                      {member.role}
-                    </div>
-                  </div>
+              <div className="flex-1 text-left">
+                <div className="font-bold text-sm text-[#2d4f36] leading-5">
+                  {member.name}
                 </div>
-              ))}
+
+                <div className="text-xs text-[#6f7f72] mt-1 leading-4">
+                  {member.role}
+                </div>
+              </div>
             </div>
-          )}
+          ))}
+        </div>
+      )}
 
           {activeScreen === 'camera' && (
             <div className="fixed top-[calc(54px+env(safe-area-inset-top))] left-1/2 -translate-x-1/2 w-full max-w-[500px] bottom-[calc(57px+env(safe-area-inset-bottom))] bg-black z-40 flex flex-col justify-between overflow-hidden">
