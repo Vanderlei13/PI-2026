@@ -2,6 +2,10 @@ import './index.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera, Home, Users } from 'lucide-react';
 import logoImg from './img/logo.png';
+import ana from "./img/ana.jpeg";
+import kemily from "./img/kemily.jpeg";
+import manuela from "./img/manuela.jpeg";
+import tiago from "./img/tiago.jpeg";
 
 export default function MaizeApp() {
   const [activeScreen, setActiveScreen] = useState('home');
@@ -12,33 +16,34 @@ export default function MaizeApp() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
+
   const creditsList = [
     {
       name: "Ana Luisa Paixão Panho",
       role: "Líder, Treinamento de IA",
-      photo: "/criadores/ana.jpeg"
+      photo: ana
     },
     {
       name: "Kemily de Santi",
       role: "Treinamento de IA",
-      photo: "/criadores/kemily.jpeg"
+      photo: kemily
     },
     {
       name: "Manuela Caldeira Machado",
       role: "Treinamento de IA",
-      photo: "/criadores/manuela.jpeg"
+      photo: manuela
     },
     {
       name: "Tiago Bernieri Dal Belo",
       role: "Vice-Líder, Programação",
-      photo: "/criadores/tiago.jpeg"
+      photo: tiago
     },
     {
       name: "Vanderlei Rossoni Pittan",
       role: "Design, Programação",
-      photo: "/criadores/vanderlei.jpeg"
     }
   ];
+
 
 
 
